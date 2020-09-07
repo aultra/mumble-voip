@@ -520,9 +520,12 @@ Citizen.CreateThread(function()
 	if not mumbleConfig.spectateAudioEnabled then return end
 	while true do
 		Citizen.Wait(1000)
+		InvalidateIdleCam() -- Stops idle cam from activating
+		N_0x9e4cfff989258472() -- Stops vehicle idle cam from activating
 		local cameraPos = GetFinalRenderedCamCoord()
 		local camDistance = GetDistanceBetweenCoords(cameraPos, GetEntityCoords(GetPlayerPed(-1)))
-		if camDistance > 15.0 then
+		if camDistance > 25.0 then
+			DebugMsg('Cam Distance: ' .. camDistance)
 			local closestPlayer, closestPlayerDistance = GetClosestPlayer(cameraPos)
 			local closestPlayerServerId = GetPlayerServerId(closestPlayer)
 			if (closestPlayer ~= -1) and (playerSpectates[playerServerId] ~= closestPlayerServerId) and closestPlayerDistance < 25.0 then
